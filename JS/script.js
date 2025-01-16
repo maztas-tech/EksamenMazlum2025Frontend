@@ -41,7 +41,7 @@ function loadData(data, index) {
               <td>${data.forventetLevering}</td>
               <td>${data.faktiskLevering}</td>
               <td>
-                  <button class='editBtn' id='editBtn${index}' data-index='${index}'>Rediger</button>
+                  <button class='addDroneBtn' id='addDroneBtn${index}' data-index='${index}'>Tilføj drone</button>
               </td>
               <td>
                   <button class='deleteBtn' id='deleteBtn${index}' data-index='${index}'>Slet</button>
@@ -52,17 +52,41 @@ function loadData(data, index) {
 
   tableBody.appendChild(tr);
 
-  const editBtn = document.getElementById("editBtn" + index);
+  const addDroneBtn = document.getElementById("addDroneBtn" + index);
   const deleteBtn = document.getElementById("deleteBtn" + index);
 
-  //editBtn
-  editBtn.addEventListener("click", () => {
-    editMad(data);
+  //addDroneBtn
+  addDroneBtn.addEventListener("click", () => {
+    addDrone(data);
   });
   //deleteBtn
   deleteBtn.addEventListener("click", () => {
     deleteMad(data);
   });
+}
+
+// POST method to add a drone to the delivery
+async function addDrone(data) {
+  try {
+    const url = `http://localhost:8080/deliveries/schedule/${data.leveringID}`;
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    alert("Drone assigned successfully to the delivery!");
+    fetchMad(); // Refresh deliveries list after drone assignment
+  } catch (error) {
+    console.error("Error adding drone:", error);
+    alert("Failed to assign drone to delivery.");
+  }
 }
 
 // This function will be called when the page loads

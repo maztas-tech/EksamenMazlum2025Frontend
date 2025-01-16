@@ -1,0 +1,68 @@
+/* Set the background color and center the content */
+body {
+  background-color: #f4f4f9; /* Light grayish-blue background */
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column; /* Stack content vertically */
+  text-align: center;
+}
+
+/* Style the table container */
+table {
+  width: 80%;
+  max-width: 800px;
+  border-collapse: collapse;
+  background-color: #ffffff; /* White background for the table */
+  border-radius: 8px; /* Rounded corners for the table */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow around the table */
+  margin-bottom: 20px; /* Space between table and the "Create New Drone" button */
+}
+
+/* Style the table headers */
+th {
+  background-color: #4caf50; /* Green background for the headers */
+  color: white;
+  padding: 10px;
+  text-align: left;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Style the table cells */
+td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd; /* Light gray border between rows */
+}
+
+/* Hover effect for the table rows */
+tr:hover {
+  background-color: #f1f1f1; /* Light gray on hover */
+}
+
+/* Style the button to create new drones */
+button {
+  background-color: #4caf50; /* Green background for the button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for the button */
+}
+
+/* Change button color on hover */
+button:hover {
+  background-color: #45a049; /* Slightly darker green when hovering */
+}
+
+/* Style the title */
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
