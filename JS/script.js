@@ -43,9 +43,6 @@ function loadData(data, index) {
               <td>
                   <button class='addDroneBtn' id='addDroneBtn${index}' data-index='${index}'>Tilføj drone</button>
               </td>
-              <td>
-                  <button class='deleteBtn' id='deleteBtn${index}' data-index='${index}'>Slet</button>
-              </td>
           `;
 
   tr.row = index;
@@ -53,15 +50,10 @@ function loadData(data, index) {
   tableBody.appendChild(tr);
 
   const addDroneBtn = document.getElementById("addDroneBtn" + index);
-  const deleteBtn = document.getElementById("deleteBtn" + index);
 
   //addDroneBtn
   addDroneBtn.addEventListener("click", () => {
     addDrone(data);
-  });
-  //deleteBtn
-  deleteBtn.addEventListener("click", () => {
-    deleteMad(data);
   });
 }
 
