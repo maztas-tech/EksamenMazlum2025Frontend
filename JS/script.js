@@ -6,6 +6,11 @@ function urlAddress() {
   return "http://localhost:8080";
 }
 
+// This function will reload the page every 60 seconds
+setInterval(function () {
+  location.reload(); // Reloads the entire page
+}, 60000); // 60000 milliseconds = 60 seconds
+
 async function fetchMad() {
   try {
     const url = urlAddress() + "/deliveries/queue";
@@ -58,6 +63,35 @@ function loadData(data, index) {
   deleteBtn.addEventListener("click", () => {
     deleteMad(data);
   });
+}
+
+// This function will be called when the page loads
+window.onload = function () {
+  // Add an event listener to the button for creating a new drone
+  document
+    .getElementById("createDroneButton")
+    .addEventListener("click", createNewDrone);
+};
+
+// Function to create a new drone
+function createNewDrone() {
+  fetch("http://localhost:8080/drones/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("New drone created successfully!");
+        // Optionally, you can refresh or update the data on the page here
+      } else {
+        alert("Error creating drone.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error creating drone:", error);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", fetchMad);
