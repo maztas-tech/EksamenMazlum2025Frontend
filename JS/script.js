@@ -1,7 +1,5 @@
 "use strict";
 
-console.log("Hello world!");
-
 function urlAddress() {
   return "http://localhost:8080";
 }
