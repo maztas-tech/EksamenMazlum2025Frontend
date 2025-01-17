@@ -4,10 +4,10 @@ function urlAddress() {
   return "http://localhost:8080";
 }
 
-// This function will reload the page every 60 seconds
+// Reload the page every 60 seconds
 setInterval(function () {
-  location.reload(); // Reloads the entire page
-}, 60000); // 60000 milliseconds = 60 seconds
+  location.reload();
+}, 60000);
 
 async function fetchMad() {
   try {
@@ -19,7 +19,7 @@ async function fetchMad() {
     }
 
     const data = await response.json(); // Parse the JSON response
-    const tableBody = document.getElementById("tableBody"); // Ensure this matches your HTML
+    const tableBody = document.getElementById("tableBody");
 
     tableBody.innerHTML = ""; // Clear the table before inserting new rows
 
@@ -71,8 +71,7 @@ async function addDrone(data) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    alert("Drone assigned successfully to the delivery!");
-    fetchMad(); // Refresh deliveries list after drone assignment
+    fetchMad();
   } catch (error) {
     console.error("Error adding drone:", error);
     alert("Failed to assign drone to delivery.");
