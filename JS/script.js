@@ -9,7 +9,7 @@ setInterval(function () {
   location.reload();
 }, 60000);
 
-async function fetchMad() {
+async function fetchDeliveries() {
   try {
     const url = urlAddress() + "/deliveries/queue";
     const response = await fetch(url);
@@ -19,10 +19,20 @@ async function fetchMad() {
     }
 
     const data = await response.json(); // Parse the JSON response
+
+    // Sortér leveringerne efter 'forventetLevering' (nyeste først)
+    data.sort((a, b) => {
+      const dateA = new Date(`1970-01-01T${a.forventetLevering}:00`);
+      const dateB = new Date(`1970-01-01T${b.forventetLevering}:00`);
+
+      return dateA - dateB; // Sorter i stigende rækkefølge (nyeste først)
+    });
+
     const tableBody = document.getElementById("tableBody");
 
     tableBody.innerHTML = ""; // Clear the table before inserting new rows
 
+    // Læs dataene ind i tabellen
     data.forEach(loadData);
   } catch (error) {
     console.error("Failed to fetch data:", error);
@@ -34,10 +44,15 @@ function loadData(data, index) {
 
   const tr = document.createElement("tr");
 
+  // Tjek om 'faktiskLevering' er null og vis "Afventer svar" i stedet
+  const faktiskLevering = data.faktiskLevering
+    ? data.faktiskLevering
+    : "Afventer svar";
+
   tr.innerHTML = `
               <td>${data.adresse}</td>
               <td>${data.forventetLevering}</td>
-              <td>${data.faktiskLevering}</td>
+              <td>${faktiskLevering}</td>
               <td>
                   <button class='addDroneBtn' id='addDroneBtn${index}' data-index='${index}'>Tilføj drone</button>
               </td>
@@ -49,7 +64,7 @@ function loadData(data, index) {
 
   const addDroneBtn = document.getElementById("addDroneBtn" + index);
 
-  //addDroneBtn
+  // addDroneBtn
   addDroneBtn.addEventListener("click", () => {
     addDrone(data);
   });
@@ -71,7 +86,7 @@ async function addDrone(data) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    fetchMad();
+    fetchDeliveries();
   } catch (error) {
     console.error("Error adding drone:", error);
     alert("Failed to assign drone to delivery.");
@@ -97,7 +112,6 @@ function createNewDrone() {
     .then((response) => {
       if (response.ok) {
         alert("New drone created successfully!");
-        // Optionally, you can refresh or update the data on the page here
       } else {
         alert("Error creating drone.");
       }
@@ -107,4 +121,4 @@ function createNewDrone() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", fetchMad);
+document.addEventListener("DOMContentLoaded", fetchDeliveries);
