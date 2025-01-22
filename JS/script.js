@@ -11,7 +11,7 @@ setInterval(function () {
 
 async function fetchDeliveries() {
   try {
-    const url = urlAddress() + "/deliveries/queue";
+    const url = urlAddress() + "/deliveriesNotDelivered";
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -44,7 +44,10 @@ function loadData(data, index) {
 
   const tr = document.createElement("tr");
 
-  // Tjek om 'faktiskLevering' er null og vis "Afventer svar" i stedet
+  const isDrone = data.drone ? "Drone tilføjet" : "Tilføj drone";
+
+  const isDisabled = data.drone ? "disabled" : "";
+
   const faktiskLevering = data.faktiskLevering
     ? data.faktiskLevering
     : "Afventer svar";
@@ -54,7 +57,7 @@ function loadData(data, index) {
               <td>${data.forventetLevering}</td>
               <td>${faktiskLevering}</td>
               <td>
-                  <button class='addDroneBtn' id='addDroneBtn${index}' data-index='${index}'>Tilføj drone</button>
+                  <button class='addDroneBtn' id='addDroneBtn${index}' data-index='${index}' ${isDisabled}>${isDrone}</button>
               </td>
           `;
 
@@ -87,6 +90,7 @@ async function addDrone(data) {
     }
 
     fetchDeliveries();
+    alert("Drone er blevet tilføjet");
   } catch (error) {
     console.error("Error adding drone:", error);
     alert("Failed to assign drone to delivery.");
